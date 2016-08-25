@@ -7,7 +7,7 @@ Selenium::WebDriver::Firefox::Binary.path='C:\Users\jack.zhou\AppData\Local\Mozi
 
 class CodeSchoolDownloader
   attr_accessor :browser
-  DOWNLOAD_LOCATION = Dir.home + '/Desktop/CodeschoolRetry'
+  DOWNLOAD_LOCATION = Dir.home + '/Desktop/Codeschool'
   TIMEOUT = 0
 
   def initialize username, password
@@ -34,10 +34,12 @@ class CodeSchoolDownloader
     create_dir dir_name
     # Specified course URLs.
     # e.g. "https://www.codeschool.com/courses/rails-testing-for-zombies/videos"
-    course_urls = []
+    course_urls = ["https://www.codeschool.com/courses/coffeescript/videos"
+                  ]
     course_urls.each do |url|
       download url, dir_name
     end
+    puts "*** COMPLETED ***"
   end
 
   def download url, dir_name, passed_in_filename = nil
@@ -71,10 +73,16 @@ class CodeSchoolDownloader
         @browser.links(:class, "modal-close")[3].when_present.fire_event("click")
         name = passed_in_filename ? passed_in_filename : "#{(counter + 1).to_s.ljust 2}- #{filenames[counter]}"
         filename = "#{sub_dir_name}/#{name}.mp4"
-        File.open(filename, 'wb') do |f|
-          puts "Downloading video #{name}..."
-          f.write(open(url, allow_redirections: :all).read)
-          puts "Saving #{filename}..."
+        # Check whether this file has been downloaded before.
+        if File.exist? filename
+          puts "*** FILE ALEADY EXIST: " + filename
+          puts "*** SKIPPING TO THE NEXT VIDEO ..."
+        else
+          File.open(filename, 'wb') do |f|
+            puts "Downloading video #{name}..."
+            f.write(open(url, allow_redirections: :all).read)
+            puts "Saving #{filename}..."
+          end
         end
       rescue => e
         p e.inspect
