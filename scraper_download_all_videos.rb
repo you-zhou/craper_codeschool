@@ -124,7 +124,7 @@ class CodeSchoolDownloader
   end
 
   def create_dir filename
-    unless File.exists? filename
+    unless File.exist? filename
       FileUtils.mkdir filename
     end
   end
