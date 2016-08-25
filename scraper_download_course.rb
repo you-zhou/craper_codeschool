@@ -3,7 +3,8 @@ require 'watir-webdriver'
 require 'open-uri'
 require 'open_uri_redirections'
 
-Selenium::WebDriver::Firefox::Binary.path='C:\Users\jack.zhou\AppData\Local\Mozilla Firefox\firefox.exe'
+# Selenium::WebDriver::Firefox::Binary.path='C:\Users\jack.zhou\AppData\Local\Mozilla Firefox\firefox.exe'
+Selenium::WebDriver::Firefox::Binary.path='C:\Program Files (x86)\Mozilla Firefox\firefox.exe'
 
 class CodeSchoolDownloader
   attr_accessor :browser
